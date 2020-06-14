@@ -1,12 +1,33 @@
 //jshint esversion:6
-const express = require("express");
-const router = express.Router();
+const passport=require("passport");
+//const flash = require("connect-flash");
+//const express = require("express");
+//const router = express.Router();
 const bcrypt = require("bcryptjs");
 const expressValidator = require("express-validator");
 const validator=require("email-validator");
-//const { sanitizeBody } = require('express-validator/filter');
+//const app=express();
+//const cookieParser=require("cookie-parser");
 
-const flash = require("connect-flash");
+const express      = require('express');
+const router = express.Router();
+const cookieParser = require('cookie-parser');
+const session      = require('express-session');
+const flash        = require('req-flash');
+ 
+const app          = express();
+ 
+app.use(cookieParser());
+app.use(session({ secret: 'secret' ,resave:true,saveUninitialized:true}));
+app.use(flash());
+
+
+// app.use(cookieParser()); 
+// app.use(express.session({ secret: "secret" }));
+ app.use(flash());
+// app.use(app.router);
+
+
 
 let name_error="",email_error="",userName_error="",password_error="",confirmPassword_error="";
 let valid;
@@ -88,7 +109,18 @@ router.post("/register", function (req, res) {
     });
     }
 });
+//loginn form
 router.get("/login", function (req, res) {
     res.render("login");
+});
+
+//login process
+router.post("/login",function(req,res,next){
+    passport.authenticate("local",{
+        successRedirect:"/compose",
+        failureRedirect:"/users/login",
+        failureFlash:true
+    })(req,res,next);
+
 });
 module.exports = router;

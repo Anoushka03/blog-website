@@ -9,6 +9,8 @@ const path = require("path");
 const session = require("express-session");
 const expressValidator = require("express-validator");
 const flash = require("connect-flash");
+const config=require("./config/database");
+const passport=require("passport");
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
 const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
@@ -60,17 +62,7 @@ app.get("/compose", function (req, res) {
 
 app.get("/posts/:postID", function (req, res) {
 
-    // for( i=0;i<blogs.length/2;i++){
-    //   if(_.lowerCase(blogs[i].title)===_.lowerCase(req.params.postName))
-    //   {
 
-    //     // res.redirect("/post");
-    //     // let str="/posts/"+_.lowerCase(blogs[i].title);
-    //     res.render("post",{postTitle:blogs[i].title,postContent:blogs[i].body});
-
-    //   }
-
-    // }
     Post.findOne({_id: req.params.postID}, function (err, foundPost) {
 
 
@@ -97,12 +89,18 @@ app.post("/compose", function (req, res) {
 
 });
 
+//passport config
+require("./config/passport")(passport);
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 //route files
 let users = require("./routes/users");
 app.use("/users", users);
 
 
-mongoose.connect("mongodb://localhost:27017/blogDB?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false", {
+mongoose.connect("mongodb://localhost:27017/blogDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
