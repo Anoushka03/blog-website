@@ -1,4 +1,5 @@
 //jshint esversion:6
+const flash = require("connect-flash");
 const passport=require("passport");
 //const flash = require("connect-flash");
 //const express = require("express");
@@ -13,7 +14,7 @@ const express      = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
-const flash        = require('req-flash');
+
  
 const app          = express();
  

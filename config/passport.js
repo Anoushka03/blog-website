@@ -1,4 +1,5 @@
 //jshint esversion:6
+const flash        = require('req-flash');
 const localStrategy=require("passport-local").Strategy;
 const user=require("../models/user");
 const config=require("../config/database");
@@ -9,13 +10,14 @@ const express      = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
-const flash        = require('req-flash');
+
  
 const app          = express();
- 
-app.use(cookieParser());
 app.use(session({ secret: 'secret',resave:true,saveUninitialized:true }));
 app.use(flash());
+app.use(cookieParser());
+
+
 
 
 module.exports=function(passport){

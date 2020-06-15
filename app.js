@@ -1,5 +1,5 @@
 //jshint esversion:6
-
+const flash = require("connect-flash");
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
 const expressValidator = require("express-validator");
-const flash = require("connect-flash");
+
 const config=require("./config/database");
 const passport=require("passport");
 
@@ -21,7 +21,11 @@ let i = 0;
 const app = express();
 
 app.set('view engine', 'ejs');
+app.use(session({ secret: 'secret',resave:true,saveUninitialized:true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use(flash());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
@@ -92,8 +96,8 @@ app.post("/compose", function (req, res) {
 //passport config
 require("./config/passport")(passport);
 //passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
+
+
 
 //route files
 let users = require("./routes/users");
