@@ -1,23 +1,19 @@
 //jshint esversion:6
 const flash = require("connect-flash");
 const passport=require("passport");
-//const flash = require("connect-flash");
-//const express = require("express");
-//const router = express.Router();
 const bcrypt = require("bcryptjs");
 const expressValidator = require("express-validator");
 const validator=require("email-validator");
-//const app=express();
-//const cookieParser=require("cookie-parser");
-
 const express      = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
+const initializePassport=require("../config/passport");
+
 
  
 const app          = express();
- 
+app.use(passport.initialize());
 app.use(cookieParser());
 app.use(session({ secret: 'secret' ,resave:true,saveUninitialized:true}));
 app.use(flash());
@@ -25,7 +21,7 @@ app.use(flash());
 
 // app.use(cookieParser()); 
 // app.use(express.session({ secret: "secret" }));
- app.use(flash());
+ //app.use(flash());
 // app.use(app.router);
 
 
@@ -123,5 +119,8 @@ router.post("/login",function(req,res,next){
         failureFlash:true
     })(req,res,next);
 
-});
+ });
+// router.route('/login')
+//     .get()
+//     .post(passport.authenticate('local',{session: false}), login)
 module.exports = router;

@@ -10,6 +10,7 @@ const session = require("express-session");
 const expressValidator = require("express-validator");
 
 const config=require("./config/database");
+
 const passport=require("passport");
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -21,9 +22,9 @@ let i = 0;
 const app = express();
 
 app.set('view engine', 'ejs');
-app.use(session({ secret: 'secret',resave:true,saveUninitialized:true }));
-app.use(passport.initialize());
-app.use(passport.session());
+ app.use(session({ secret: 'secret',resave:true,saveUninitialized:true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(flash());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -35,6 +36,12 @@ const postsSchema = mongoose.Schema({
     post: String
 });
 const Post = mongoose.model("post", postsSchema);
+
+//passport config
+require("./config/passport")(passport);
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.get("/", function (req, res) {
@@ -93,9 +100,6 @@ app.post("/compose", function (req, res) {
 
 });
 
-//passport config
-require("./config/passport")(passport);
-//passport middleware
 
 
 
