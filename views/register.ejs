@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('partials/headerRegister') %>
 
 <form action="/users/register" method="POST" >
     <div class="container">
@@ -37,7 +37,8 @@
       <p><%=confirmPassword_error%></p>
       <br>
       <hr>
-      <button type="submit" class="registerbtn">Register</button>
+      <button type="submit" class="registerbtn">Register</button><br>
+      <p><%=exists_error%></p>
     </div>
 </form>
 

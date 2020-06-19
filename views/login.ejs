@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('partials/headerLogin') %>
 <form action="/users/login" method="POST">
     <div class="container">
       <h1>Login</h1>
@@ -9,10 +9,12 @@
       
 
       <label for="userName"><b>Username</b></label>
-      <input type="text" placeholder="Username" name="userName" id="userName" required><br>
+      <input type="text" placeholder="Username" name="userName" id="userName" ><br><br>
+      <p><%=userName_error%></p><br><br>
   
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" id="psw" required><br>
+      <input type="password" placeholder="Enter Password" name="psw" id="psw" ><br><br>
+      <p><%=password_error%></p><br><br>
   
       
       
@@ -20,18 +22,4 @@
       <button type="submit" class="loginbtn">Login</button>
     </div>
 </form>
-
-<!-- <nav>
-  <ul>
-      <li><a href="/users/logout">Logout</a></li>
-      <li><a href="/users/login">Login</a></li>
-      <li><a href="/">Homepage</a></li>
-  </ul>
-</nav>
-<header>
-  <h1>Login using...</h1>
-</header>
-<main>
-  <a class="google-btn" href="/users/google">Google+</a>
-</main> -->
 <%- include('partials/footer') %>
