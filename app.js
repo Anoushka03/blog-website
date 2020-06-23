@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
 const expressValidator = require("express-validator");
+const User = require("./models/user");
+const Post=require("./models/post");
 
 const config=require("./config/database");
 //const passport=require("passport");
@@ -26,31 +28,37 @@ app.use(session({ secret: 'secret',resave:true,saveUninitialized:true }));
 // app.use(passport.session());
 
 // app.use(flash());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-
-const postsSchema = mongoose.Schema({
-    title: String,
-    post: String,
-    userID:String
+mongoose.connect("mongodb://localhost:27017/blogDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
-const Post = mongoose.model("post", postsSchema);
 
-app.get("/",function(req,res){
-    res.render("welcome");
-})
-app.get("/home", function (req, res) {
-    let id=req.body.user_id;
-    Post.find({userID:id}, function (err, posts) {
-        if (!err) {
-            console.log(typeof (posts));
-            res.render("home", {homeContent: homeStartingContent, blogs: posts,user_id:id});
-        }
-    });
+
+// const postsSchema = mongoose.Schema({
+//     title: String,
+//     post: String,
+//     userID:String
+// });
+// const Post = mongoose.model("post", postsSchema);
+
+// app.get("/",function(req,res){
+//     res.render("welcome");
+// })
+// app.get("/home", function (req, res) {
+//     let id=req.body.user_id;
+//     Post.find({userID:id}, function (err, posts) {
+//         if (!err) {
+//             console.log(typeof (posts));
+//             res.render("home", {homeContent: homeStartingContent, blogs: posts,user_id:id});
+//         }
+//     });
 
     
-});
+// });
 
 
 // app.get("/about", function (req, res) {
@@ -61,57 +69,60 @@ app.get("/home", function (req, res) {
 //     res.render("contact", {contactContent: contactContent});
 // });
 
-app.get("/compose", function (req, res) {
-    res.render("compose",{user_id:req.body.user_id});
-});
+// app.get("/compose", function (req, res) {
+//     res.render("compose",{user_id:req.body.user_id});
+// });
 
 
-app.get("/posts/:postID", function (req, res) {
+// app.get("/posts/:postID", function (req, res) {
 
 
-    Post.findOne({_id: req.params.postID}, function (err, foundPost) {
+//     Post.findOne({_id: req.params.postID}, function (err, foundPost) {
 
 
-        res.render("post", {postTitle: foundPost.title, postContent: foundPost.post});
+//         res.render("post", {postTitle: foundPost.title, postContent: foundPost.post});
 
-    });
-
-
-});
+//     });
 
 
-app.post("/compose", function (req, res) {
-
-    const post = new Post({
-        title: req.body.postTitle,
-        post: req.body.postBody,
-        userID:req.body.user_id
-    });
-    post.save(function (err) {
-        if (!err) {
-            res.redirect("/home");
-        }
-    });
+// });
 
 
-});
+// app.post("/compose", function (req, res) {
+
+//     const post = new Post({
+//         title: req.body.postTitle,
+//         post: req.body.postBody,
+//         userID:req.user._id
+//     });
+//     console.log(req.user._id);
+//     post.save(function (err) {
+//         if (!err) 
+//         {
+//             Post.find({userID:req.user._id}, function (err, posts) {
+//                 if (!err) {
+//                     console.log( (posts));
+//                     res.render("home", {blogs: posts});
+//                 }
+//             });
+//         }
+//     });
+
+
+// });
 
 
 
 
 
 //route files
+
 let users = require("./routes/users");
 app.use("/users", users);
 
 
-mongoose.connect("mongodb://localhost:27017/blogDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
+
+
     app.listen(3000, function () {
         console.log("Server started on port 3000");
     });
-}).catch(err => {
-    console.log(err)
-})

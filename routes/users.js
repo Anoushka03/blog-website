@@ -1,19 +1,52 @@
 //jshint esversion:6
-const flash = require("connect-flash");
-const passport=require("passport");
 const bcrypt = require("bcryptjs");
-const expressValidator = require("express-validator");
-const emailCheck=require("email-check");
 const express      = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
-const app          = express();
 const User = require("../models/user");
- 
-app.use(cookieParser());
-app.use(session({ secret: 'secret' ,resave:true,saveUninitialized:true}));
-app.use(flash());
+const Post=require("../models/post");
+const mongoose=require("mongoose");
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+var store=new MongoDBStore( require("../config/database"));
+
+//middleware
+router.use(cookieParser());
+router.use(session({ secret: 'secret' ,resave:true,saveUninitialized:true,name:"sid",
+cookie:
+{
+    path:"/",
+    maxAge:60*60*60*2,
+    sameSite:true,
+    secure:"production"
+},
+store:store
+}));
+
+const redirectLogin=(req,res,next)=>{
+    if((!req.session.userID)===true){
+        //console.log(!req.session.userID+" hello");
+        res.redirect("/users/login");
+    }
+    else{
+        next();
+    }
+};
+
+const redirectHome=(req,res,next)=>{
+    if((!req.session.userId)){
+        next();
+        //res.redirect("/users/compose");
+    }
+    else
+    {
+        //console.log(!req.session.userID+" redirectHome ");
+        res.redirec("/users/compose");
+        //next();
+    }
+};
+
 
 
 
@@ -26,16 +59,21 @@ let name_error="",email_error="",userName_error="",password_error="",confirmPass
 let exists_error="";
 let valid;
 
+router.get("/",function(req,res){
+    const{ userID}=req.session;
+    //console.log(req.session+"ha"+userID);
+    res.render("welcome");
+})
 
-router.get("/register", function (req, res) {
+router.get("/register",redirectHome, function (req, res) {
     res.render("register",{name_error:"",email_error:"",userName_error:"",
         password_error:"",confirmPassword_error:"",exists_error:""});
 });
 
-router.use(expressValidator());
+
 
 //registration process
-router.post("/register", function (req, res) {
+router.post("/register",redirectHome, function (req, res) {
     const name = req.body.name;
     const email = req.body.email;
     const userName = req.body.userName;
@@ -93,6 +131,7 @@ router.post("/register", function (req, res) {
                         userName: userName,
                         password: password
                     });
+                    
                     bcrypt.genSalt(10, function (err, salt) {
                         bcrypt.hash(newUser.password, salt, function (err, hash) {
                             if (err) {
@@ -105,6 +144,8 @@ router.post("/register", function (req, res) {
                                 if (err) {
                                     console.log(err);
                                 } else {
+                                    req.session.userID=newUser._id;
+                                    console.log(req.session.userID+"reg");
                                     //req.flash("success", "You are now registered and can log in");
                                     res.redirect("/users/login");
                                     //res.render("login",{userName_error:"",password_error:""});
@@ -122,15 +163,15 @@ router.post("/register", function (req, res) {
 });
 
 //loginn form
-router.get("/login", function (req, res) {
-    res.render("login",{userName_error:"",password_error:""});
+router.get("/login",redirectHome, function (req, res) {
+    res.render("login",{email_error:"",password_error:""});
 });
 
 //login process
-router.post("/login",function(req,res){
-    let userName=req.params.userName;
-    let password=""+req.params.psw;
-    User.findOne({userName:userName},function(err,foundUser){
+router.post("/login",redirectHome, function(req,res){
+    let email=req.body.email;
+    let password=""+req.body.psw;
+    User.findOne({email:email},function(err,foundUser){
         if(!err)
         {
             if(foundUser){
@@ -139,15 +180,19 @@ router.post("/login",function(req,res){
                       throw err
                     } else if (!isMatch) {
 
-                        res.render("login",{userName_error:"",password_error:"Password do not match"});
+                        res.render("login",{email_error:"",password_error:"Password do not match"});
                     } else {
-                      res.render("compose",{user_id:foundUser._id});
+                    //   res.render("compose");
+                        req.session.userID=foundUser._id;
+                        //console.log("login"+req.session.userID);
+                        //return res.redirect("/users/compose");
+                        res.render("compose",{username:foundUser.userName});
                     }
                   })
                
             }
             else{
-                res.render("login",{userName_error:"username does not exists",password_error:""});
+                res.render("login",{email_error:"user does not exists",password_error:""});
             }
         }
 
@@ -155,6 +200,76 @@ router.post("/login",function(req,res){
 
 
 });
+
+router.get("/compose",redirectLogin,function(req,res){
+    User.findOne({_id:req.session.userID},function(err,foundUser){
+        if(!err)
+        {
+            if(foundUser)
+            {
+                Post.find({userID:foundUser._id}, function (err, posts) {
+                    if (!err) {
+                        //console.log( (posts));
+                        res.render("compose", {username: foundUser.userName});
+                    }
+                });   
+            }
+        }
+    });
+
+    
+});
+
+router.post("/compose", function (req, res) {
+     
+    User.findOne({_id:req.session.userID},function(err,foundUser){
+        if(!err)
+        {
+            if(foundUser)
+            {
+                //console.log("found "+foundUser._id);
+                const post = new Post({
+                    title: req.body.postTitle,
+                    post: req.body.postBody,
+                    userID:foundUser._id
+                });
+                //console.log(req.session.userId+"compose");
+                post.save(function (err) {
+                    if (!err) 
+                    {
+                        Post.find({userID:foundUser._id}, function (err, posts) {
+                            if (!err) {
+                                //console.log( (posts));
+                                res.render("dashboard", {blogs: posts,username:foundUser.userName});
+                            }
+                        });
+                    }
+                });
+
+            }
+        }
+    });
+
+
+
+});
+
+router.get("/dashboard",function(req,res){
+    User.findOne({_id:req.session.userID},function(err,foundUser){
+        if(!err)
+        {
+            if(foundUser)
+            {
+                Post.find({userID:foundUser._id}, function (err, posts) {
+                    if (!err) {
+                        //console.log( (posts));
+                        res.render("dashboard", {blogs: posts,username:foundUser.userName});
+                    }
+                });   
+            }
+        }
+    });
+})
 
 //logout process
 router.get('/logout', function(req, res, next) {
@@ -164,7 +279,8 @@ router.get('/logout', function(req, res, next) {
         if(err) {
           return next(err);
         } else {
-          return res.redirect('/');
+            res.clearCookie("sid");
+            return res.redirect('/users/');
         }
       });
     }

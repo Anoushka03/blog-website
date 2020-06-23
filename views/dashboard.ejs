@@ -1,9 +1,9 @@
 <%- include('partials/headerDashboard') %>
-<h1>Home</h1>
-<p><%= homeContent %> </p>
+<h1>Welcome <%=username%></h1>
+<p> </p>
 <!-- <%blogs.forEach(blog => console.log(blog.titlle))%> -->
 <%let len=blogs.length;%>
-<p name="user_id"><% user_id %> </p>
+
 <%for(let i=0;i<len;i++){%>
     <h1><%=blogs[i].title%></h1>
     <%if(blogs[i].post.length>10){%>
