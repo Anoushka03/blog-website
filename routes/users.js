@@ -8,7 +8,7 @@ const User = require("../models/user");
 const Post=require("../models/post");
 const mongoose=require("mongoose");
 const MongoDBStore = require('connect-mongodb-session')(session);
-
+const app=express();
 var store=new MongoDBStore( require("../config/database"));
 
 //middleware
@@ -269,7 +269,57 @@ router.get("/dashboard",function(req,res){
             }
         }
     });
-})
+});
+
+router.get("/posts/:postID", function (req, res) {
+
+    User.findOne({_id:req.session.userID},function(err,foundUser){
+        if(!err)
+        {
+            if(foundUser)
+            {
+                Post.findOne({_id:req.params.postID},function(err,foundPost){
+                    if(foundPost)
+                    {
+                        res.render("post",{postTitle:foundPost.title,postContent:foundPost.post,postID:foundPost._id});   
+                    }
+                });
+            }
+        }
+    });
+});
+
+router.post("/posts/:postID/delete",function(req,res){
+    User.findOne({_id:req.session.userID},function(err,foundUser){
+        if(!err)
+        {
+            if(foundUser)
+            {
+                Post.findByIdAndDelete({_id:req.params.postID},function(err,foundPost){
+                    if(!err)
+                    {
+                        if(foundPost)
+                        {
+                            Post.find({userID:foundUser._id},function(err,found){
+                                if(!err)
+                                {
+                                    if(found)
+                                    {
+                                        res.render("dashboard",{blogs:found,username:foundUser.userName});
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    
+                });
+
+            }
+        }
+    });
+
+});
 
 //logout process
 router.get('/logout', function(req, res, next) {

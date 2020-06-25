@@ -8,7 +8,7 @@
     <h1><%=blogs[i].title%></h1>
     <%if(blogs[i].post.length>10){%>
         
-        <p><%=blogs[i].post.substring(0,100)%>...<a href="/posts/<%=blogs[i]._id%>">Read more</a></p>
+        <p><%=blogs[i].post.substring(0,100)%>...<a href="/users/posts/<%=blogs[i]._id%>">Read more</a></p>
     <%} else{ %> 
         <p><%=blogs[i].post%></p>
     <%}%>

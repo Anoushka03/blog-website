@@ -1,4 +1,9 @@
-<%- include('partials/header') %>
+<%- include('partials/headerCompose') %>
 <h1><%=postTitle%></h1>
 <p><%= postContent %> </p>
+<br>
+<br>
+<form action="/users/posts/<%=postID %>/delete" method="POST">
+    <button type="submit" >DELETE</button>
+</form>
 <%- include('partials/footer') %>
