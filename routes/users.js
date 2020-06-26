@@ -186,7 +186,7 @@ router.post("/login",redirectHome, function(req,res){
                         req.session.userID=foundUser._id;
                         //console.log("login"+req.session.userID);
                         //return res.redirect("/users/compose");
-                        res.render("compose",{username:foundUser.userName});
+                        res.render("compose",{username:foundUser.userName,title_edit:"",body_edit:""});
                     }
                   })
                
@@ -210,7 +210,7 @@ router.get("/compose",redirectLogin,function(req,res){
                 Post.find({userID:foundUser._id}, function (err, posts) {
                     if (!err) {
                         //console.log( (posts));
-                        res.render("compose", {username: foundUser.userName});
+                        res.render("compose", {username: foundUser.userName,title_edit:"",body_edit:""});
                     }
                 });   
             }
@@ -320,6 +320,35 @@ router.post("/posts/:postID/delete",function(req,res){
     });
 
 });
+
+router.post("/posts/:postID/edit",function(req,res){
+    let title="",body="";
+    User.findOne({_id:req.session.userID},function(err,foundUser){
+        if(!err)
+        {
+            if(foundUser)
+            {
+                Post.findByIdAndDelete({_id:req.params.postID},function(err,foundPost){
+                    if(!err)
+                    {
+                        if(foundPost)
+                        {
+                            title=foundPost.title;
+                            body=foundPost.post;
+                            console.log(title+" "+body);
+                            res.render("compose", {username: foundUser.userName,title_edit:title,body_edit:body});
+                            //res.render("compose", {username: foundUser.userName,title_edit:foundPost.title,body_edit:foundPost.post});
+                        }
+                    }
+                    
+                });
+                //res.render("compose", {username: foundUser.userName,title_edit:title,body_edit:body});
+            }
+        }
+    });
+
+});
+
 
 //logout process
 router.get('/logout', function(req, res, next) {
