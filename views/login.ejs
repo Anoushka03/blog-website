@@ -1,25 +1,19 @@
 <%- include('partials/headerLogin') %>
 <form action="/users/login" method="POST">
-    <div class="container">
-      <h1>Login</h1>
-      
-      <hr>
-    
-
-      
-
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="email" name="email" id="email" ><br><br>
+  <div class="login-box">
+    <h1>Login</h1>
+    <div class="textbox">
+      <i class="fas fa-user"></i>
+      <input type="text" placeholder="Email" name="email" id="email"><br><br>
       <p><%=email_error%></p><br><br>
-  
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" id="psw" ><br><br>
-      <p><%=password_error%></p><br><br>
-  
-      
-      
-  
-      <button type="submit" class="loginbtn">Login</button>
     </div>
+
+    <div class="textbox">
+      <i class="fas fa-lock"></i>
+      <input type="password" placeholder="Enter Password" name="psw" id="psw"><br><br>
+      <p><%=password_error%></p>
+    </div>
+    <button type="submit" class="btn">Login</button>
+  </div>
 </form>
 <%- include('partials/footer') %>

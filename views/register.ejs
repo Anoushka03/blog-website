@@ -1,45 +1,37 @@
 <%- include('partials/headerRegister') %>
-
-<form action="/users/register" method="POST" >
-    <div class="container">
-      <h1>Register</h1>
-      <p>Please fill in this form to create an account.</p>
+<div class="wrap">
+    <h2>SignUp Here</h2>
+    <form action="/users/register" method="POST" >
       <hr>
-    
-      <label for="name"><b>Name</b></label>
-      <input type="text" placeholder="Enter Name" name="name" id="name" ><br>
+      <!-- <label for="name"><b>Name</b></label> -->
+      <input type="text" placeholder="Enter Name" name="name" id="name" required><br>
       <p><%=name_error%></p>
-      <br>
-      
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" id="email" ><br>
+      <!-- <label for="email"><b>Email</b></label> -->
+      <input type="text" placeholder="Enter Email" name="email" id="email" required><br>
       <p><%=email_error%></p>
-      <br>
       
 
-      <label for="userName"><b>Username</b></label>
-      <input type="text" placeholder="Username" name="userName" id="userName" ><br>
+      <!-- <label for="userName"><b>Username</b></label> -->
+      <input type="text" placeholder="Username" name="userName" id="userName" required><br>
       <p><%=userName_error%></p>
-      <br>
       
       
   
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" id="psw" ><br>
+      <!-- <label for="psw"><b>Password</b></label> -->
+      <input type="password" placeholder="Enter Password" name="psw" id="psw" required><br>
       <p><%=password_error%></p>
-      <br>
       
       
   
-      <label for="psw2"><b>Confirm Password</b></label>
-      <input type="password" placeholder="Confirm Password" name="psw2" id="psw2" >
+      <!-- <label for="psw2"><b>Confirm Password</b></label> -->
+      <input type="password" placeholder="Confirm Password" name="psw2" id="psw2" required>
       <br>
       <p><%=confirmPassword_error%></p>
       <br>
-      <hr>
       <button type="submit" class="registerbtn">Register</button><br>
-      <p><%=exists_error%></p>
-    </div>
-</form>
+      <p><%=exists_error%></p> 
+    </form>
+</div>
+<br>
 
 <%- include('partials/footer') %>
