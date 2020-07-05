@@ -3,11 +3,12 @@
 
 <head>
   <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
   <title>Daily Journal</title>
-  <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
-
+  <link rel="stylesheet" href="/css/dashcss.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
@@ -19,7 +20,7 @@
           <li ><a href="/users/compose">COMPOSE</a></li>
           <li ><!--<a href="/logout">LOG OUT</a> -->
             <form action="/users/logout" method="GET">
-                <button type="submit" >LOG OUT</button>
+                <button style="transform: translateY(9px);" class="btn" type="submit" >LOG OUT</button>
               </form>
             </li>
         </ul>
@@ -27,4 +28,10 @@
   </nav>
 
   <body>
-    <div class="container">
+    <div class="menu">
+      <div class="search-box">
+        <input class="search-txt" type="text" name="" placeholder="Search">
+        <a class="search-btn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>        
+      </div>
+    </div>
+    <div class="xx">

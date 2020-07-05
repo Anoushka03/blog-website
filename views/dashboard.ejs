@@ -1,14 +1,13 @@
 <%- include('partials/headerDashboard') %>
-<h1>Welcome <%=username%></h1>
-<p> </p>
+<h1 id="welcome">Welcome <%=username%></h1>
+<p></p>
 <!-- <%blogs.forEach(blog => console.log(blog.titlle))%> -->
 <%let len=blogs.length;%>
 
 <%for(let i=0;i<len;i++){%>
-    <h1><%=blogs[i].title%></h1>
-    <p><%=blogs[i].post.substring(0,100)%>...<a href="/users/posts/<%=blogs[i]._id%>">Read more</a></p>
-    
-    
+    <h1 id="ph"><%=blogs[i].title%></h1>
+    <p id="pp"><%=blogs[i].post.substring(0,100)%>...<a href="/users/posts/<%=blogs[i]._id%>">Read more</a></p>
+    <br>
 <%}%>
 
 
