@@ -1,12 +1,19 @@
 <%- include('partials/headerCompose') %>
-<h1><%=postTitle%></h1>
-<p><%= postContent %> </p>
+<h1 class="inc"><%=postTitle%>:</h1>
+<p class="lessinc"><%= postContent %> </p>
 <br>
 <br>
-<form action="/users/posts/<%=postID %>/delete" method="POST">
-    <button type="submit" >DELETE</button>
-</form>
+
+<div class="text-center" id="form">
+<div class="one">
 <form action="/users/posts/<%=postID %>/edit" method="POST">
-    <button type="submit" >EDIT</button>
+    <button id="edit" class="log" type="submit" >EDIT</button>
 </form>
+</div>
+<div class="one">
+<form action="/users/posts/<%=postID %>/delete" method="POST">
+    <button id="delete" class="log" type="submit" >DELETE</button>
+</form>
+</div>
+</div>
 <%- include('partials/footer') %>

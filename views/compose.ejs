@@ -1,20 +1,20 @@
 <%- include('partials/headerCompose') %>
-<h1>Compose</h1>
-<h4>Author: <%=username%></h4>
+<h1 id="comp">Compose</h1>
+<h3>Author: <%=username%></h3>
 <form action="/users/compose" method="POST">
     
         <div class="form-group">
         
           <label >Title</label>
-          <textarea rows="1" cols="170" class="form-control"  name="postTitle"><%=title_edit%></textarea>
+          <textarea rows="1" cols="170" class="form-control" maxlength="50" placeholder="Upto 50 character.." name="postTitle"><%=title_edit%></textarea>
           <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
         </div>
         <div class="form-group">
           <label >Post</label>
-          <textarea rows="5" cols="170" class="form-control" name="postBody"><%=body_edit%></textarea>
+          <textarea rows="5" cols="170" class="form-control" name="postBody" maxlength="1000" placeholder="Upto 1000 characters..."><%=body_edit%></textarea>
         </div>
         
-        <button type="submit" class="btn btn-primary">Publish</button>
+        <button type="submit" class="btn">Publish</button>
       
 </form>
 
