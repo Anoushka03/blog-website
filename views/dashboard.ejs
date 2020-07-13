@@ -1,7 +1,5 @@
 <%- include('partials/headerDashboard') %>
 <h1 id="welcome">Welcome <%=username%></h1>
-<p></p>
-<!-- <%blogs.forEach(blog => console.log(blog.titlle))%> -->
 <%let len=blogs.length;%>
 
 <%for(let i=0;i<len;i++){%>
@@ -13,18 +11,24 @@
 
 <div class="menu">
     <div class="search-box">
-      <input class="search-txt" type="text" name="" placeholder="  Search Your Blogs..">
-      <a class="search-btn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>        
+      <!-- <input class="search-txt" type="text" name="search" placeholder="  Search Your Blogs.."> -->
+      <!-- <a class="search-btn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>         -->
+      <br>
+      <form action="/users/dashboard" method="POST">
+        <input class="search-txt" type="text" name="search" placeholder="  Search Your Blogs..">
+        <button  class="log" type="submit" >Search</button>
+      </form>
     </div>
-    <div class="searched">
-        Searched Items appear here.<br>
-        Searched Items appear here.<br>
-        Searched Items appear here.<br>
-        Searched Items appear here.<br>
-        Searched Items appear here.<br>
-        Searched Items appear here.<br>
-        Searched Items appear here.<br>
-        Searched Items appear here.<br>
-        
-    </div>
+    <%let len1=searches.length;%>
+    
+        <%for(let i=0;i<len1;i++){%>
+            <div class="searched">
+            <%= searches[i].title %><br>
+            <%=searches[i].post.substring(0,100)%>...<a href="/users/posts/<%=searches[i]._id%>">Read more</a> %>      
+            </div>
+        <%}%>
+        <p color="white"><%=title_error%></p>
+    
+</div>
+    
 <%- include('partials/footer') %>

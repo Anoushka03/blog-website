@@ -1,5 +1,5 @@
 //jshint esversion:6
-const flash = require("connect-flash");
+//const flash = require("connect-flash");
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -7,7 +7,7 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
-const expressValidator = require("express-validator");
+//const expressValidator = require("express-validator");
 const User = require("./models/user");
 const Post=require("./models/post");
 

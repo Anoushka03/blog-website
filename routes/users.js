@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const session      = require('express-session');
 const User = require("../models/user");
 const Post=require("../models/post");
+const _=require("lodash");
 const mongoose=require("mongoose");
 const MongoDBStore = require('connect-mongodb-session')(session);
 const app=express();
@@ -182,11 +183,17 @@ router.post("/login",redirectHome, function(req,res){
 
                         res.render("login",{email_error:"",password_error:"Password do not match"});
                     } else {
-                    //   res.render("compose");
+                    
                         req.session.userID=foundUser._id;
                         //console.log("login"+req.session.userID);
                         //return res.redirect("/users/compose");
-                        res.render("compose",{username:foundUser.userName,title_edit:"",body_edit:""});
+                        //res.render("compose",{username:foundUser.userName,title_edit:"",body_edit:""});
+                        Post.find({userID:foundUser._id}, function (err, posts) {
+                            if (!err) {
+                                
+                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:""});
+                            }
+                        });
                     }
                   })
                
@@ -229,7 +236,7 @@ router.post("/compose", function (req, res) {
             {
                 //console.log("found "+foundUser._id);
                 const post = new Post({
-                    title: req.body.postTitle,
+                    title: _.toLower(req.body.postTitle),
                     post: req.body.postBody,
                     userID:foundUser._id
                 });
@@ -240,7 +247,7 @@ router.post("/compose", function (req, res) {
                         Post.find({userID:foundUser._id}, function (err, posts) {
                             if (!err) {
                                 //console.log( (posts));
-                                res.render("dashboard", {blogs: posts,username:foundUser.userName});
+                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:""});
                             }
                         });
                     }
@@ -262,15 +269,56 @@ router.get("/dashboard",function(req,res){
             {
                 Post.find({userID:foundUser._id}, function (err, posts) {
                     if (!err) {
-                        //console.log( (posts));
-                        res.render("dashboard", {blogs: posts,username:foundUser.userName});
+                        
+                        res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:""});
                     }
-                });   
+                });
+                
             }
         }
     });
 });
 
+router.post("/dashboard",function(req,res)
+{
+    let search=req.body.search;
+    let title_error="";
+    if(search!="")
+    {
+        
+        User.findOne({_id:req.session.userID},function(err,foundUser){
+            if(!err)
+            {
+                if(foundUser)
+                {
+                    Post.find({userID:foundUser._id}, function (err, posts) {
+                        if (!err) 
+                        {
+                            Post.find({title:_.toLower(search)},function(err,foundTitle){
+                                if(!err)
+                                {
+                                    if(foundTitle)
+                                    {
+                                        if(foundTitle.length===0)
+                                        {
+                                            title_error="title doesn't exists";
+                                        }
+                                        res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:foundTitle,title_error:title_error});
+                                    }
+                                   
+                                }
+                            });
+                        }
+                            
+                         
+                    });
+                    
+                }
+            }
+        });   
+    }
+    
+})
 router.get("/posts/:postID", function (req, res) {
 
     User.findOne({_id:req.session.userID},function(err,foundUser){
