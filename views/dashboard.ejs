@@ -16,18 +16,18 @@
       <br>
       <form action="/users/dashboard" method="POST">
         <input class="search-txt" type="text" name="search" placeholder="  Search Your Blogs..">
-        <button  class="log" type="submit" >Search</button>
+        <button  class="log" type="submit" ><i class="fa fa-search" aria-hidden="true"></i></button>
       </form>
     </div>
     <%let len1=searches.length;%>
     
         <%for(let i=0;i<len1;i++){%>
             <div class="searched">
-            <%= searches[i].title %><br>
+            <%=searches[i].title %><br>
             <%=searches[i].post.substring(0,100)%>...<a href="/users/posts/<%=searches[i]._id%>">Read more</a> %>      
             </div>
         <%}%>
-        <p color="white"><%=title_error%></p>
+        <p style="color:white"><%=title_error%></p>
     
 </div>
     
