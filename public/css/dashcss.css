@@ -36,6 +36,25 @@
     font-weight: bold;
 }
 
+.btn1{
+    width: 20%;
+    background: none;
+    border: 2px solid #1abc9c;
+    color: #1abc9c;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    /* margin-left: 35%; */
+    /* margin-top: 0px; */
+    transition: 0.3s ease-out;
+}
+  
+  .btn1:hover{
+    color: #fff;
+    background-color: #1abc9c ;
+  }
+
 .titerror{
     width: 14%;
     position: absolute;
