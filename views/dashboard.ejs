@@ -15,7 +15,7 @@
       <!-- <a class="search-btn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>         -->
       <br>
       <form action="/users/dashboard" method="POST">
-        <input class="search-txt" type="text" name="search" placeholder="  Search Your Blogs..">
+        <input class="search-txt" type="text" name="search" placeholder="  Search Your Blogs.." autocomplete="off">
         <button  class="log" type="submit" ><i class="fa fa-search" aria-hidden="true"></i></button>
       </form>
     </div>
@@ -27,7 +27,11 @@
             <%=searches[i].post.substring(0,100)%>...<a href="/users/posts/<%=searches[i]._id%>">Read more</a> %>      
             </div>
         <%}%>
-        <p style="color:white"><%=title_error%></p>
+        <!-- <p style="color:white"><%=title_error%></p> -->
+        <div class="titerror">
+          <p style="color:white"><%=title_error%></p>
+        </div>
+        
     
 </div>
     
