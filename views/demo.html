@@ -1,34 +1,37 @@
+<!--suppress ALL -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <title>Upload Images to Server</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <style>
+        body {
+            background: darkturquoise;
+        }
+    </style>
+</head>
 <body>
-<form onsubmit="regEx(); return false">
-Name:<br/>
-<input type="text" /><br/>
-<br/>
-Post/ZIP code (5 digits):<br/>
-<input type="text" /><br/>
-<br/>
-<input type="submit" />
-</form>
-<script>
-function regEx(){
-function testName(){
-var name = document.getElementsByTagName("input")[0].value;
-var nameTest = name.search(/[a-zA-Z]/g);
-if (nameTest == -1||name == ""){
-alert("Please enter only letters in this field.");
-}
-}
-function testZip(){
-var zip = document.getElementsByTagName("input")[1].value;
-var zipTest = zip.match(/\d/g);
-if (zipTest.length != 5||zip == ""){
-alert("Please enter 5 numbers in this field.");
-}
-}
-testName();
-testZip();
-}
-</script>
+
+<div class="container">
+    <div class="card border-success mt-5">
+        <h1 class="card-header">Upload Image</h1>
+        <div class="card-body">
+            <div class="form-group">
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input class="form-control-file" type="file" accept="image/*" name="photo" >
+                    <input class="btn mt-3" type="submit" value="upload">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
