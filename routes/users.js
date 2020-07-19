@@ -11,6 +11,15 @@ const mongoose=require("mongoose");
 const MongoDBStore = require('connect-mongodb-session')(session);
 const app=express();
 var store=new MongoDBStore( require("../config/database"));
+const path = require('path');
+const multer=require("multer"); 
+//require('dotenv/config');
+var storage=multer.diskStorage({
+    destination:"./public/uploads/",
+    filename:(req,file,cb)=>{
+        cb(null,file.filename+"_"+Date.now()+path.extname(file.originalname));
+    }
+});
 
 //middleware
 router.use(cookieParser());
@@ -24,6 +33,9 @@ cookie:
 },
 store:store
 }));
+var upload=multer({
+    storage:storage
+}).single("file");
 
 const redirectLogin=(req,res,next)=>{
     if((!req.session.userID)===true){
@@ -130,7 +142,8 @@ router.post("/register",redirectHome, function (req, res) {
                         name: name,
                         email: email,
                         userName: userName,
-                        password: password
+                        password: password,
+                        img:"default-image-png.png"
                     });
                     
                     bcrypt.genSalt(10, function (err, salt) {
@@ -190,8 +203,8 @@ router.post("/login",redirectHome, function(req,res){
                         //res.render("compose",{username:foundUser.userName,title_edit:"",body_edit:""});
                         Post.find({userID:foundUser._id}, function (err, posts) {
                             if (!err) {
-                                
-                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:""});
+                                console.log(foundUser.img);
+                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});
                             }
                         });
                     }
@@ -247,7 +260,7 @@ router.post("/compose", function (req, res) {
                         Post.find({userID:foundUser._id}, function (err, posts) {
                             if (!err) {
                                 //console.log( (posts));
-                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:""});
+                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});
                             }
                         });
                     }
@@ -270,7 +283,7 @@ router.get("/dashboard",function(req,res){
                 Post.find({userID:foundUser._id}, function (err, posts) {
                     if (!err) {
                         
-                        res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:""});
+                        res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});
                     }
                 });
                 
@@ -279,11 +292,12 @@ router.get("/dashboard",function(req,res){
     });
 });
 
-router.post("/dashboard",function(req,res)
+router.post("/dashboard",upload,function(req,res)
 {
     let search=req.body.search;
     let title_error="";
-    if(search!="")
+    let image=req.file.filename;
+    if(search!=undefined)
     {
         
         User.findOne({_id:req.session.userID},function(err,foundUser){
@@ -291,6 +305,16 @@ router.post("/dashboard",function(req,res)
             {
                 if(foundUser)
                 {
+                    if(image!=undefined)
+                    {
+                        foundUser.img=image;
+                        foundUser.save(function(err){
+                            if(err)
+                            {
+                                throw err;
+                            }
+                        });
+                    }
                     Post.find({userID:foundUser._id}, function (err, posts) {
                         if (!err) 
                         {
@@ -303,7 +327,7 @@ router.post("/dashboard",function(req,res)
                                         {
                                             title_error="title doesn't exists";
                                         }
-                                        res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:foundTitle,title_error:title_error});
+                                        res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:foundTitle,title_error:title_error,img_name:foundUser.img});
                                     }
                                    
                                 }
@@ -317,8 +341,36 @@ router.post("/dashboard",function(req,res)
             }
         });   
     }
-    
-})
+    else
+    {
+        User.findOne({_id:req.session.userID},function(err,foundUser){
+            if(!err)
+            {
+                if(foundUser)
+                {
+                    if(image!=undefined)
+                    {
+                        foundUser.img=image;
+                        foundUser.save(function(err){
+                            if(err)
+                            {
+                                throw err;
+                            }
+                        });
+                        Post.find({userID:foundUser._id}, function (err, posts) {
+                            if (!err) 
+                            {
+                                res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});   
+                            }
+                                
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+});
 router.get("/posts/:postID", function (req, res) {
 
     User.findOne({_id:req.session.userID},function(err,foundUser){
