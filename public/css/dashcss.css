@@ -4,6 +4,28 @@
     font-family: 'Merienda One', cursive;
 }
 
+#bg{
+    background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.8)) !important;
+    border: none;
+    width: 61%;
+    color: #a5a5a5;
+    margin: auto;
+}
+
+input[type=file] button{
+    background: none !important;
+}
+
+#resize{
+    width: 200px;
+    height: 200px;
+    border: 1px solid white;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    background-color: white;
+}
+
 .log{
     background: none;
     border: none;
@@ -45,15 +67,14 @@
     font-size: 12px;
     border-radius: 7px;
     cursor: pointer;
-    /* margin-left: 35%; */
-    /* margin-top: 0px; */
     transition: 0.3s ease-out;
+    transition: background 0.5s;
 }
   
   .btn1:hover{
     color: #fff;
-    background-color: #1abc9c ;
-  }
+    background-color: #1abc9c;
+  } 
 
 .titerror{
     width: 14%;
@@ -93,7 +114,7 @@ footer{
 .menu{
     width: 30%;
     margin-right: 0;
-    height: 100vh;
+    /* min-height: 100vh; */
     float: left;
     text-align: center;
     padding-top: 50px;
@@ -116,6 +137,7 @@ a,a:hover{
     /* background-color: cadetblue; */
     padding-left: 60px;
     padding-top: 30px;
+    min-height: 100vh;
 }
 .search-box{
     width: 70%;
