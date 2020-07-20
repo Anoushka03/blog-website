@@ -21,6 +21,7 @@ var storage=multer.diskStorage({
     }
 });
 
+
 //middleware
 router.use(cookieParser());
 router.use(session({ secret: 'secret' ,resave:true,saveUninitialized:true,name:"sid",
@@ -296,7 +297,13 @@ router.post("/dashboard",upload,function(req,res)
 {
     let search=req.body.search;
     let title_error="";
-    let image=req.file.filename;
+    console.log(req.file+" image");
+    let image=req.file;
+    if(image!=undefined)
+    {
+        image=req.file.filename;
+    }
+    //console.log(image+" image");
     if(search!=undefined)
     {
         
