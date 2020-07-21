@@ -254,9 +254,19 @@ footer {
 }
 
 
+@media screen and (min-width:700px) and (max-width:1000px) {
+    #resize{
+        width: 150px;
+        height: 150px;
+    }
+    .searched{
+        height: 25vh;
+    }
+}
 
-@media screen and(min-width:500px){
+
+/* @media screen and(min-width:500px){
     .xx{
         padding-left: 60px;
     }
-}
+} */

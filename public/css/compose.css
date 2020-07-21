@@ -34,7 +34,7 @@ body{
     transform: scale();
     color: #1abc9c;
     border-radius: 10px;
-    padding: 24px;
+    padding: 10px 24px;
     transition: 0.5s ease-out;
 }
 
@@ -118,6 +118,9 @@ footer {
     text-align:center;
 }
 
+#contract{
+    margin-top: 0;
+}
 .one{
     display:inline-block;
 }

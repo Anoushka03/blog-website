@@ -1,8 +1,7 @@
 <%- include('partials/headerRegister') %>
-<div class="wrap">
     <h2>SignUp Here</h2>
     <form action="/users/register" method="POST" >
-      <hr>
+      <!-- <hr> -->
       <!-- <label for="name"><b>Name</b></label> -->
       <input type="text" placeholder="Enter Name" name="name" id="name" required><br>
       <p><%=name_error%></p>
@@ -31,7 +30,4 @@
       <button type="submit" class="registerbtn">Register</button><br>
       <p style="padding-top: 10px;" class="text-center"><%=exists_error%></p> 
     </form>
-</div>
-<br>
-
 <%- include('partials/footer') %>
