@@ -4,7 +4,7 @@
 
 <%for(let i=0;i<len;i++){%>
     <h1 id="ph"><%=blogs[i].title%></h1>
-    <p id="pp"><%=blogs[i].post.substring(0,100)%>...<a href="/users/posts/<%=blogs[i]._id%>">Read more</a></p>
+    <p id="pp"><%=blogs[i].post.substring(0,30)%>...<a href="/users/posts/<%=blogs[i]._id%>">Read more</a></p>
     <br>
 <%}%>
 </div>
@@ -44,24 +44,18 @@
       </form>
     </div>
     <%let len1=searches.length;%>
-    
+    <div class="searched" id="style-1">
         <%for(let i=0;i<len1;i++){%>
-            <div class="searched">
-            <%=searches[i].title %><br>
-            <%=searches[i].post.substring(0,100)%>...<a href="/users/posts/<%=searches[i]._id%>">Read more</a> %>      
-            </div>
+            
+            <p><%=searches[i].title %><br>
+            <%=searches[i].post.substring(0,30)%>...<a href="/users/posts/<%=searches[i]._id%>">Read more</a> %></p>  
+            
         <%}%>
+      
         <!-- <p style="color:white"><%=title_error%></p> -->
         <div class="titerror">
           <p style="color:white"><%=title_error%></p>
         </div>
-        
-    
+      </div>
 </div>
-
-<script>
-  var divHeight = $('.xx').height(); 
-  $('.menu').css('min-height', divHeight+'px');
-</script>
-    
 <%- include('partials/footer') %>

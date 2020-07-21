@@ -19,7 +19,7 @@ body{
     font-size: 200%;
 }
 #comp{
-    font-size: 500%;
+    font-size: 300%;
     text-align: center;
     margin: 0;
 }
@@ -122,9 +122,10 @@ footer {
     display:inline-block;
 }
 
-  @media screen and (min-width:992px){
+  @media screen and (min-width:920px){
       .xx{
           width: 90%;
+          transform: translate(-50%,-44%);
       }
       #comp{
           font-size: 300%;

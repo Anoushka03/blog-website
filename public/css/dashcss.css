@@ -68,7 +68,6 @@ input[type=file] button{
     border-radius: 7px;
     cursor: pointer;
     transition: 0.3s ease-out;
-    transition: background 0.5s;
 }
   
   .btn1:hover{
@@ -77,9 +76,26 @@ input[type=file] button{
   } 
 
 .titerror{
-    width: 14%;
+    width: 97%;
     position: absolute;
-    margin: 2% 9%;
+    text-align: center;
+}
+
+#style-1::-webkit-scrollbar {
+    width: 4px;
+    background-color: black;
+} 
+
+#style-1::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.3);
+}
+#style-1::-webkit-scrollbar:horizontal {
+    height: 4px;
+    background-color: black;
+} 
+
+#style-1::-webkit-scrollbar-thumb:horizontal {
+    background-color: rgba(255,255,255,0.3);
 }
 
 /* .titerror{
@@ -91,14 +107,21 @@ footer{
 }
 
 .searched{
-    height: auto;
+    height: 45vh;
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: auto;
     background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.5));
-    width: 70%;
+    width: 90%;
     color: white;
     margin: auto;
     margin-top: 10px;
     padding: 10px;
     text-align: left;
+}
+
+.searched p{
+    padding: 9px;
 }
 
 .searched a{
@@ -114,11 +137,17 @@ footer{
 .menu{
     width: 30%;
     margin-right: 0;
-    /* min-height: 100vh; */
+    height: 104vh;
+    /* max-height: 100vh; */
     float: left;
     text-align: center;
     padding-top: 50px;
     background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.5));
+    /*overflow: hidden;*/
+} 
+
+.whole{
+    height: 100%;
 }
 i{
     color: white;
@@ -137,7 +166,12 @@ a,a:hover{
     /* background-color: cadetblue; */
     padding-left: 60px;
     padding-top: 30px;
-    min-height: 100vh;
+    height: 104vh;
+    overflow-y: scroll;
+}
+.row{
+    padding: 0 !important;
+    margin: 0 !important;
 }
 .search-box{
     width: 70%;
@@ -224,4 +258,10 @@ footer {
 }
 #pp a:hover{
     color: aqua;
+}
+
+@media screen and(min-width:500px){
+    .xx{
+        padding-left: 60px;
+    }
 }

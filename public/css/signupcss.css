@@ -9,6 +9,7 @@ body{
 
 .container{
     min-height: calc(100vh-90px-60px) !important;
+    height: 100vh;
 }
 .wrap{
     max-width: 70%;
