@@ -10,14 +10,15 @@
 </div>
 
 <div class="menu">
-  <form action="/users/dashboard"  method="post"  role="form" enctype="multipart/form-data">
+  <form onsubmit="checkextension()" action="/users/dashboard"  method="post"  role="form" enctype="multipart/form-data">
                                    
                                         
     <div class="form-group">
         <img src="/uploads/<%=img_name%>" alt="<%=img_name%>" >
         <label for="file" >Upload File</label>
+        <p>* Valid file types are :.png, .jpeg, .jpg, .gif</p>
         <div >
-            <input type="file" class="form-control" name="file" required>
+            <input type="file" class="form-control" name="file" id="fUpload"  required/>
         </div>
     </div>
     
@@ -27,6 +28,7 @@
         <div >
         <input type="submit" name="submit" value="Upload" class="btn btn-primary">   
         </div>
+        <%=img_error%>
     </div>
     
     
@@ -54,5 +56,17 @@
         <p style="color:white"><%=title_error%></p>
     
 </div>
-    
-<%- include('partials/footer') %>
+</div>
+<footer>
+  <p>Made with ❤️</p>
+</footer>
+<script src="https://kit.fontawesome.com/87390cb8ac.js" crossorigin="anonymous">
+function checkextension() {
+  var file = document.querySelector("#fUpload");
+  if ( /\.(jpe?g|png|gif)$/i.test(file.files[0].name) === false ) { alert("not an image!"); }
+}
+</script>
+</body>
+</html>
+
+<!-- <%- include('partials/footer') %> -->
