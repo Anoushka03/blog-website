@@ -13,7 +13,7 @@ const app=express();
 var store=new MongoDBStore( require("../config/database"));
 const path = require('path');
 const multer=require("multer"); 
-//require('dotenv/config');
+
 var storage=multer.diskStorage({
     destination:"./public/uploads/",
     filename:(req,file,cb)=>{
@@ -34,6 +34,7 @@ cookie:
 },
 store:store
 }));
+
 var upload=multer({
     storage:storage
 }).single("file");
@@ -205,7 +206,7 @@ router.post("/login",redirectHome, function(req,res){
                         Post.find({userID:foundUser._id}, function (err, posts) {
                             if (!err) {
                                 console.log(foundUser.img);
-                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});
+                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:""});
                             }
                         });
                     }
@@ -261,7 +262,7 @@ router.post("/compose", function (req, res) {
                         Post.find({userID:foundUser._id}, function (err, posts) {
                             if (!err) {
                                 //console.log( (posts));
-                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});
+                                res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:""});
                             }
                         });
                     }
@@ -284,7 +285,7 @@ router.get("/dashboard",function(req,res){
                 Post.find({userID:foundUser._id}, function (err, posts) {
                     if (!err) {
                         
-                        res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});
+                        res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:""});
                     }
                 });
                 
@@ -295,13 +296,23 @@ router.get("/dashboard",function(req,res){
 
 router.post("/dashboard",upload,function(req,res)
 {
+    let exts=[".png",".jpeg",".jpg",".gif"];
     let search=req.body.search;
     let title_error="";
+    let flag=0;
+    let img_error="";
     console.log(req.file+" image");
     let image=req.file;
     if(image!=undefined)
     {
         image=req.file.filename;
+        let ext=_.toLower(path.extname(image));
+        
+        if(exts.includes(ext,0)===false)
+        {
+            flag=1;
+        }
+        //console.log(ext+" extension");
     }
     //console.log(image+" image");
     if(search!=undefined)
@@ -312,7 +323,7 @@ router.post("/dashboard",upload,function(req,res)
             {
                 if(foundUser)
                 {
-                    if(image!=undefined)
+                    if(image!=undefined && flag===0)
                     {
                         foundUser.img=image;
                         foundUser.save(function(err){
@@ -334,7 +345,8 @@ router.post("/dashboard",upload,function(req,res)
                                         {
                                             title_error="title doesn't exists";
                                         }
-                                        res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:foundTitle,title_error:title_error,img_name:foundUser.img});
+
+                                        res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:foundTitle,title_error:title_error,img_name:foundUser.img,img_error:""});
                                     }
                                    
                                 }
@@ -355,7 +367,7 @@ router.post("/dashboard",upload,function(req,res)
             {
                 if(foundUser)
                 {
-                    if(image!=undefined)
+                    if(image!=undefined && flag===0)
                     {
                         foundUser.img=image;
                         foundUser.save(function(err){
@@ -364,14 +376,19 @@ router.post("/dashboard",upload,function(req,res)
                                 throw err;
                             }
                         });
+                    }
                         Post.find({userID:foundUser._id}, function (err, posts) {
                             if (!err) 
                             {
-                                res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img});   
+                                if(flag===1)
+                                {
+                                    img_error="invalid file type";
+                                }
+                                res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:img_error});   
                             }
                                 
                         });
-                    }
+                    
                 }
             }
         });
@@ -412,7 +429,7 @@ router.post("/posts/:postID/delete",function(req,res){
                                 {
                                     if(found)
                                     {
-                                        res.render("dashboard",{blogs:found,username:foundUser.userName});
+                                        res.render("dashboard",{blogs:found,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:""});
 
                                     }
                                 }
