@@ -4,16 +4,12 @@
     font-family: 'Merienda One', cursive;
 }
 
-#bg{
+.bg{
     background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.8)) !important;
     border: none;
     width: 61%;
     color: #a5a5a5;
     margin: auto;
-}
-
-input[type=file] button{
-    background: none !important;
 }
 
 #resize{
@@ -107,7 +103,7 @@ footer{
 }
 
 .searched{
-    height: 45vh;
+    height: 42vh;
     position: relative;
     overflow-y: scroll;
     overflow-x: auto;
@@ -169,10 +165,7 @@ a,a:hover{
     height: 104vh;
     overflow-y: scroll;
 }
-.row{
-    padding: 0 !important;
-    margin: 0 !important;
-}
+
 .search-box{
     width: 70%;
     background-color: #7a828e;
@@ -259,6 +252,8 @@ footer {
 #pp a:hover{
     color: aqua;
 }
+
+
 
 @media screen and(min-width:500px){
     .xx{

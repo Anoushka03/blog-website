@@ -14,18 +14,11 @@
                                    
                                         
     <div class="form-group">
-<<<<<<< HEAD
         <img id="resize" src="/uploads/<%=img_name%>" alt="<%=img_name%>" >
         <!-- <label for="file" >Upload File</label> -->
+        <p style="color: aliceblue;">* Valid file types are :.png, .jpeg, .jpg, .gif</p>
         <div >
-            <input id="bg" type="file" class="form-control" name="file" required>
-=======
-        <img src="/uploads/<%=img_name%>" alt="<%=img_name%>" >
-        <label for="file" >Upload File</label>
-        <p>* Valid file types are :.png, .jpeg, .jpg, .gif</p>
-        <div >
-            <input type="file" class="form-control" name="file" id="fUpload"  required/>
->>>>>>> d143b1b86a90c9108e5eb3f690a266278ae08579
+            <input type="file" class="form-control bg" name="file" id="fUpload"  required/>
         </div>
     </div>
     
@@ -60,7 +53,6 @@
             <%=searches[i].post.substring(0,30)%>...<a href="/users/posts/<%=searches[i]._id%>">Read more</a> %></p>  
             
         <%}%>
-<<<<<<< HEAD
       
         <!-- <p style="color:white"><%=title_error%></p> -->
         <div class="titerror">
@@ -68,29 +60,16 @@
         </div>
       </div>
 </div>
-<<<<<<< HEAD
-<%- include('partials/footer') %>
-=======
 </div>
-<footer>
-  <p>Made with ❤️</p>
-</footer>
-<script src="https://kit.fontawesome.com/87390cb8ac.js" crossorigin="anonymous">
+
+<!-- <script src="https://kit.fontawesome.com/87390cb8ac.js" crossorigin="anonymous"> -->
+<script>
 function checkextension() {
   var file = document.querySelector("#fUpload");
   if ( /\.(jpe?g|png|gif)$/i.test(file.files[0].name) === false ) { alert("not an image!"); }
 }
 </script>
-</body>
-</html>
-
-<!-- <%- include('partials/footer') %> -->
->>>>>>> d143b1b86a90c9108e5eb3f690a266278ae08579
-=======
-        <p style="color:white"><%=title_error%></p>
-    
-
 
 
 <%- include('partials/footer') %>
->>>>>>> c8928f4d9435346aaa091d0fdbd42801978da918
+
