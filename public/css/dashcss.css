@@ -266,7 +266,7 @@ footer {
     transform: translateX(-61%);
 }
 
-@media screen and (min-width:700px) and (max-width:1000px) {
+@media screen and (min-width:700px) and (max-width:1200px) {
     #resize{
         width: 150px;
         height: 150px;
@@ -275,8 +275,15 @@ footer {
         height: 25vh;
     }
 }
+<<<<<<< HEAD
 @media screen and (max-height:650px){
     .searched{
         height: 29vh;
+=======
+
+@media screen and (max-height:650px){
+    .searched{
+        height:30vh;
+>>>>>>> d33286aa949559ce296723f1f5eeb1a77404db5c
     }
 }
