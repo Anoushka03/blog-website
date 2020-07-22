@@ -275,3 +275,8 @@ footer {
         height: 25vh;
     }
 }
+@media screen and (max-height:650px){
+    .searched{
+        height: 29vh;
+    }
+}
