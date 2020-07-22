@@ -1,5 +1,5 @@
 <%- include('partials/headerLogin') %>
-<form action="/users/login" method="POST">
+<form action="/users/login" method="POST" onsubmit="return fun();">
   <div class="login-box">
     <h1>Login</h1>
     <div class="textbox">
@@ -17,4 +17,28 @@
     <button type="submit" class="btn">Login</button>
   </div>
 </form>
+
+<script>
+  function fun(){
+    var email = document.getElementById('email').value;
+			var psw = document.getElementById('psw').value;
+      var last = email.substring(email.length-4,email.length);
+      var val=email.includes('@');
+    if (val==true && last===".com")
+    {} 
+    else 
+    {
+        alert("Please enter a valid email!");
+        return false;
+    }
+    if (psw.length>=6)
+    {}
+    else
+    {
+      alert("Minimum length of password is 6!");
+      return false;
+    }
+    return true;
+  }
+</script>
 <%- include('partials/footer') %>

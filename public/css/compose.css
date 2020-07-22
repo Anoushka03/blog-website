@@ -132,6 +132,7 @@ footer {
       }
       #comp{
           font-size: 300%;
+          padding-top:10px;
       }
       .inc{
         font-size: 350%;
@@ -140,3 +141,21 @@ footer {
           font-size: 150%;
       }
   }
+
+@media screen and (max-height:540px){
+    #comp{
+        padding-top: 0;
+        font-size: 250%;
+    }
+
+    .form-control{
+        padding:0 12px;
+    }
+
+    .btn{
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 3px 0;
+        font-size: 16px;
+    }
+}
