@@ -90,7 +90,7 @@
     background-color: rgba(255,255,255,0.3);
 }
 #style-1::-webkit-scrollbar:horizontal {
-    height: 4px;
+    height: 0px;
     background-color: black;
 } 
 
