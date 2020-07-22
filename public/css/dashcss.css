@@ -28,6 +28,10 @@
     transform: translateY(-9px);
 }
 
+.log:focus{
+    border: none;
+}
+
 .log:hover i{
     color:#1abc9c;
 }
@@ -103,7 +107,7 @@ footer{
 }
 
 .searched{
-    height: 42vh;
+    height: 36vh;
     position: relative;
     overflow-y: scroll;
     overflow-x: auto;
@@ -253,6 +257,14 @@ footer {
     color: aqua;
 }
 
+#shiftremove{
+    float: right;
+    transform: translate(-145%,-149%);
+}
+
+#shiftupload{
+    transform: translateX(-61%);
+}
 
 @media screen and (min-width:700px) and (max-width:1000px) {
     #resize{
@@ -263,10 +275,3 @@ footer {
         height: 25vh;
     }
 }
-
-
-/* @media screen and(min-width:500px){
-    .xx{
-        padding-left: 60px;
-    }
-} */
