@@ -26,7 +26,8 @@
     <div class="form-group">
         <!-- Button -->                                        
         <div >
-        <input type="submit" name="submit" value="Upload" class="btn1">   
+        <input type="submit" name="upload" value="Upload" class="btn1"> 
+         
         </div>
         <%=img_error%>
     </div>
@@ -36,13 +37,16 @@
     
     
 </form>
+  <form action="/users/dashboard" method="POST">
+    <input type="submit" name="remove" value="Remove" class="btn1"> 
+  </form>
     <div class="search-box">
       <!-- <input class="search-txt" type="text" name="search" placeholder="  Search Your Blogs.."> -->
       <!-- <a class="search-btn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>         -->
       <br>
       <form action="/users/dashboard" method="POST">
         <input class="search-txt" type="text" name="search" placeholder="  Search Your Blogs.." autocomplete="off">
-        <button  class="log" type="submit" ><i class="fa fa-search" aria-hidden="true"></i></button>
+        <button  class="log" type="submit" name="searchBar" value="Search" ><i class="fa fa-search" aria-hidden="true"></i></button>
       </form>
     </div>
     <%let len1=searches.length;%>

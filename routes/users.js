@@ -298,11 +298,13 @@ router.post("/dashboard",upload,function(req,res)
 {
     let exts=[".png",".jpeg",".jpg",".gif"];
     let search=req.body.search;
+    let searchBar=req.body.searchBar;
     let title_error="";
     let flag=0;
     let img_error="";
     console.log(req.file+" image");
     let image=req.file;
+    //console.log(req.body.upload+ "upload");
     if(image!=undefined)
     {
         image=req.file.filename;
@@ -315,16 +317,96 @@ router.post("/dashboard",upload,function(req,res)
         //console.log(ext+" extension");
     }
     //console.log(image+" image");
-    if(search!=undefined)
-    {
+    
+    // if(search!=undefined)
+    // {
         
+    //     User.findOne({_id:req.session.userID},function(err,foundUser){
+    //         if(!err)
+    //         {
+    //             if(foundUser)
+    //             {
+    //                 if(image!=undefined && flag===0)
+    //                 {
+    //                     foundUser.img=image;
+    //                     foundUser.save(function(err){
+    //                         if(err)
+    //                         {
+    //                             throw err;
+    //                         }
+    //                     });
+    //                 }
+    //                 Post.find({userID:foundUser._id}, function (err, posts) {
+    //                     if (!err) 
+    //                     {
+    //                         Post.find({title:_.toLower(search)},function(err,foundTitle){
+    //                             if(!err)
+    //                             {
+    //                                 if(foundTitle)
+    //                                 {
+    //                                     if(foundTitle.length===0)
+    //                                     {
+    //                                         title_error="title doesn't exists";
+    //                                     }
+
+    //                                     res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:foundTitle,title_error:title_error,img_name:foundUser.img,img_error:""});
+    //                                 }
+                                   
+    //                             }
+    //                         });
+    //                     }
+                            
+                         
+    //                 });
+                    
+    //             }
+    //         }
+    //     });   
+    // }
+    // else
+    // {
+    //     User.findOne({_id:req.session.userID},function(err,foundUser){
+    //         if(!err)
+    //         {
+    //             if(foundUser)
+    //             {
+    //                 if(image!=undefined && flag===0)
+    //                 {
+    //                     foundUser.img=image;
+    //                     foundUser.save(function(err){
+    //                         if(err)
+    //                         {
+    //                             throw err;
+    //                         }
+    //                     });
+    //                 }
+    //                     Post.find({userID:foundUser._id}, function (err, posts) {
+    //                         if (!err) 
+    //                         {
+    //                             if(flag===1)
+    //                             {
+    //                                 img_error="invalid file type";
+    //                             }
+    //                             res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:img_error});   
+    //                         }
+                                
+    //                     });
+                    
+    //             }
+    //         }
+    //     });
+    // }
+
+    
+    if(req.body.upload==="Upload" && flag===0)
+    {
         User.findOne({_id:req.session.userID},function(err,foundUser){
             if(!err)
             {
                 if(foundUser)
                 {
-                    if(image!=undefined && flag===0)
-                    {
+                    //if(image!=undefined && flag===0)
+                    //{
                         foundUser.img=image;
                         foundUser.save(function(err){
                             if(err)
@@ -332,7 +414,67 @@ router.post("/dashboard",upload,function(req,res)
                                 throw err;
                             }
                         });
-                    }
+                    //}
+                        Post.find({userID:foundUser._id}, function (err, posts) {
+                            if (!err) 
+                            {
+                                
+                                res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:img_error});   
+                            }
+                                
+                        });
+                    
+                }
+            }
+        });   
+    }
+    else if(req.body.remove==="Remove")
+    {
+        User.findOne({_id:req.session.userID},function(err,foundUser){
+            if(!err)
+            {
+                if(foundUser)
+                {
+                    //if(image!=undefined && flag===0)
+                    //{
+                        foundUser.img="default-image-png.png";
+                        foundUser.save(function(err){
+                            if(err)
+                            {
+                                throw err;
+                            }
+                        });
+                    //}
+                        Post.find({userID:foundUser._id}, function (err, posts) {
+                            if (!err) 
+                            {
+                                
+                                res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:img_error});   
+                            }
+                                
+                        });
+                    
+                }
+            }
+        });
+    }
+    else if(searchBar==="Search")
+    {
+        User.findOne({_id:req.session.userID},function(err,foundUser){
+            if(!err)
+            {
+                if(foundUser)
+                {
+                    // if(image!=undefined && flag===0)
+                    // {
+                    //     foundUser.img=image;
+                    //     foundUser.save(function(err){
+                    //         if(err)
+                    //         {
+                    //             throw err;
+                    //         }
+                    //     });
+                    // }
                     Post.find({userID:foundUser._id}, function (err, posts) {
                         if (!err) 
                         {
@@ -358,40 +500,11 @@ router.post("/dashboard",upload,function(req,res)
                     
                 }
             }
-        });   
+        });
     }
     else
     {
-        User.findOne({_id:req.session.userID},function(err,foundUser){
-            if(!err)
-            {
-                if(foundUser)
-                {
-                    if(image!=undefined && flag===0)
-                    {
-                        foundUser.img=image;
-                        foundUser.save(function(err){
-                            if(err)
-                            {
-                                throw err;
-                            }
-                        });
-                    }
-                        Post.find({userID:foundUser._id}, function (err, posts) {
-                            if (!err) 
-                            {
-                                if(flag===1)
-                                {
-                                    img_error="invalid file type";
-                                }
-                                res.render("dashboard",{blogs:posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:img_error});   
-                            }
-                                
-                        });
-                    
-                }
-            }
-        });
+        res.redirect("/users/dashboard");
     }
 
 });
