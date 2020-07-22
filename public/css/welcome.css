@@ -4,12 +4,23 @@
     font-family: 'Merienda One', cursive;
 }
 
+/* body{
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('../img/p4.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
 .background{
+    background:linear-gradient(rgba(0, 0, 0, 0.6),rgba(0,0,0,0.5)),url('../img/p5.jpg');
+    background-size: cover;
+    background-blend-mode: darken;
+    background-position: center;
+}
+/* .background{
     background: rgba(0, 0, 0, 0.7) url('https://source.unsplash.com/1600x900/?blog,personal');
     background-size: cover;
     background-blend-mode: darken;
-    
-}
+} */
 
 .firstSection{
     height: 100vh;
@@ -78,7 +89,7 @@ footer {
     padding-top: 3px;
     width: 100%;
     height: 30px;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,1);
   }
   
   footer p{

@@ -266,12 +266,18 @@ footer {
     transform: translateX(-61%);
 }
 
-@media screen and (min-width:700px) and (max-width:1000px) {
+@media screen and (min-width:700px) and (max-width:1200px) {
     #resize{
         width: 150px;
         height: 150px;
     }
     .searched{
         height: 25vh;
+    }
+}
+
+@media screen and (max-height:650px){
+    .searched{
+        height:30vh;
     }
 }
