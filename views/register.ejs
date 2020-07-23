@@ -1,6 +1,6 @@
 <%- include('partials/headerRegister') %>
     <h2>SignUp Here</h2>
-    <form action="/users/register" method="POST" >
+    <form action="/users/register" method="POST" onsubmit="return fun();">
       <!-- <hr> -->
       <!-- <label for="name"><b>Name</b></label> -->
       <input type="text" placeholder="Enter Name" name="name" id="name" required><br>
@@ -30,4 +30,30 @@
       <button type="submit" class="registerbtn">Register</button><br>
       <p style="padding-top: 10px;" class="text-center"><%=exists_error%></p> 
     </form>
+
+    <script>
+      function fun(){
+    var email = document.getElementById('email').value;
+			var psw = document.getElementById('psw').value;
+      var last = email.substring(email.length-4,email.length);
+      var val=email.includes('@');
+    if (val==true && last===".com")
+    {} 
+    else 
+    {
+        alert("Please enter a valid email!");
+        return false;
+    }
+    if (psw.length>=6)
+    {}
+    else
+    {
+      alert("Minimum length for password is 6!");
+      document.getElementById('psw').value="";
+      document.getElementById('psw2').value="";
+      return false;
+    }
+    return true;
+  }
+    </script>
 <%- include('partials/footer') %>
