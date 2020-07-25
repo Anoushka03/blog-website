@@ -275,15 +275,9 @@ footer {
         height: 25vh;
     }
 }
-<<<<<<< HEAD
-@media screen and (max-height:650px){
-    .searched{
-        height: 29vh;
-=======
 
 @media screen and (max-height:650px){
     .searched{
         height:30vh;
->>>>>>> d33286aa949559ce296723f1f5eeb1a77404db5c
     }
 }
