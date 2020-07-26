@@ -31,9 +31,9 @@
       <p style="padding-top: 10px;" class="text-center"><%=exists_error%></p> 
     </form>
 
-    <script>
+    <script type="text/javascript">
       function fun(){
-    var email = document.getElementById('email').value;
+      var email = document.getElementById('email').value;
 			var psw = document.getElementById('psw').value;
       var last = email.substring(email.length-4,email.length);
       var val=email.includes('@');
@@ -53,6 +53,40 @@
       document.getElementById('psw2').value="";
       return false;
     }
+    //var p = document.getElementById('newPassword').value,
+    //    errors = [];
+    // if (p.length < 8) {
+    //     alert("Your password must be at least 8 characters");
+    //       document.getElementById('psw').value="";
+    //       document.getElementById('psw2').value="";
+          
+    // }
+    // if (p.search(/[a-z]/i) < 0) {
+    //     alert("Your password must contain at least one lowercase letter."); 
+    //     document.getElementById('psw').value="";
+    //     document.getElementById('psw2').value="";
+        
+    // }
+    // if (p.search(/[A-Z]/i) < 0) {
+    //   console.log("hello");
+    //     alert("Your password must contain at least one uppercase letter."); 
+    //     document.getElementById('psw').value="";
+    //     document.getElementById('psw2').value="";
+        
+    // }
+    // if (p.search(/[0-9]/) < 0) {
+      
+    //     alert("Your password must contain at least one digit.");
+    //     document.getElementById('psw').value="";
+    //     document.getElementById('psw2').value="";
+        
+    // }
+    // if(str.match(/[a-z]/g) && str.match(/[A-Z]/g) && str.match(/[0-9]/g) && str.match(/[^a-zA-Z\d]/g) && str.length >= 8)
+    // {
+    //   console.log("hello");
+    //   alert("Enter valid password")
+      
+    // }
     return true;
   }
     </script>
