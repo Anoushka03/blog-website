@@ -35,24 +35,24 @@
       function fun(){
       var email = document.getElementById('email').value;
 			var psw = document.getElementById('psw').value;
-      var last = email.substring(email.length-4,email.length);
-      var val=email.includes('@');
-    if (val==true && last===".com")
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email.match(mailformat))
     {} 
     else 
     {
         alert("Please enter a valid email!");
         return false;
     }
-    if (psw.length>=6)
-    {}
-    else
-    {
-      alert("Minimum length for password is 6!");
-      document.getElementById('psw').value="";
-      document.getElementById('psw2').value="";
-      return false;
-    }
+    // To check a password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character
+  var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+  if(psw.match(passw)) 
+  { }
+  else
+  { 
+    alert('Password must be between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character');
+    document.getElementById('psw').value="";
+    return false;
+  }
     //var p = document.getElementById('newPassword').value,
     //    errors = [];
     // if (p.length < 8) {
