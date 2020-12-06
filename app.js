@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/blogDB", {
+mongoose.connect("mongodb://localhost:27017/blog", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
