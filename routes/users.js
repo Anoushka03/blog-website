@@ -284,7 +284,7 @@ router.get("/dashboard",function(req,res){
             {
                 Post.find({userID:foundUser._id}, function (err, posts) {
                     if (!err) {
-                        
+                        //console.log(foundUser.image);
                         res.render("dashboard", {blogs: posts,username:foundUser.userName,searches:"",title_error:"",img_name:foundUser.img,img_error:""});
                     }
                 });
